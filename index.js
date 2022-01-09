@@ -9,7 +9,7 @@ dotenv.config();
 connect();
 const app = express();
 app.use(express.json());
-// app.use(cors({ origin: "http://localhost:3000/" }));
+app.use(cors({ origin: "*" }));
 app.use("/api/v1/user", user);
 app.use("/api/v1/task", task);
 
