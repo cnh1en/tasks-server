@@ -100,19 +100,13 @@ const fetchTaksController = async (req, res, next) => {
     case "admin": // admin thi tim dc tat ca cac task tao boi admin
       try {
         const tasks = await TaskModel.find({ assignby: currentUser.email });
-        // serivce.checkTaskEveryDay(tasks);
         resBody = {
           ...resBody,
           tasks,
           success: true,
           message: "Truy vấn thành công !",
         };
-        // service.checkTaskEveryDay(tasks);
-        // for (let task of tasks) {
-        //   if (task.status === "pending" && task.isEmail === false) {
-        //     await TaskModel.findByIdAndUpdate(task._id, { isEmail: true });
-        //   }
-        // }
+
         return res.status(200).json(resBody);
       } catch (error) {
         resBody.message = error.message;
@@ -144,14 +138,13 @@ const doneTaskController = async (req, res, next) => {
   try {
     let taskDone = await TaskModel.findOne({ _id: taskId });
     let emailFind = taskDone.assignto;
-    let user = await UserModel.findOne({ email: emailFind });
     await UserModel.findOneAndUpdate(
       { email: emailFind },
-      { task_complete: user.task_complete + 1 },
+      { $inc: { task_complete: 1 } },
       { new: true }
     );
-    const task = await TaskModel.findOneAndUpdate(
-      { _id: taskId },
+    const task = await TaskModel.findByIdAndUpdate(
+      taskId,
       { status: "success" },
       { new: true }
     );
@@ -173,12 +166,14 @@ const updateTaskController = async (req, res, next) => {
     title: Joi.string().min(5).max(100).required(),
     describe: Joi.string().min(5).required(),
     deadlineAt: Joi.date().required(),
+    status: Joi.string().required(),
   });
 
   const updatedTask = {
     title: reqBody.title,
     describe: reqBody.describe,
     deadlineAt: reqBody.deadlineAt,
+    status: reqBody.status,
   };
 
   try {

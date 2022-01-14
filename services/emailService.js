@@ -2,17 +2,17 @@ import mailer from "nodemailer";
 
 const deadlineCall = (title, user) => {
   const mailOptions = {
-    from: "cnhien12@gmail.com",
+    from: process.env.EMAIL,
     to: "cnhien12@gmail.com",
-    subject: `Lam deadline di em oiiiii ${user}`,
-    text: title,
+    subject: `Thời hạn công việc của bạn còn 1 ngày duy nhất !`,
+    text: `"${title}" chưa được hoàn thành, bạn cần hoàn thành công việc`,
   };
 
   const transporter = mailer.createTransport({
     service: "gmail",
     auth: {
-      user: "cnhien12@gmail.com",
-      pass: "lequynh012",
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
     },
   });
   transporter.sendMail(mailOptions, function (error, info) {
@@ -24,20 +24,6 @@ const deadlineCall = (title, user) => {
   });
 };
 const checkTaskEveryDay = (task) => {
-  // const timeSchedule = {
-  //   // year: dayjs(task.deadlineAt).get("year"),
-  //   // month: dayjs(task.deadlineAt).get("month"),
-  //   // date = dayjs(task.deadlineAt).subtract(2, "days").get("date"),
-  //   year: 2022,
-  //   month: 0,
-  //   date: 1,
-  //   hour: 21,
-  //   minute: 11,
-  //   second: 10,
-  // };
-  // schedule.scheduleJob(timeSchedule, () => {
-  //   deadlineCall(task.title, task.assignto);
-  // });
   deadlineCall(task.title, task.assignto);
 };
 export { checkTaskEveryDay };
