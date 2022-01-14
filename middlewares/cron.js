@@ -14,7 +14,7 @@ const Schedule = async () => {
         service.checkTaskEveryDay(task);
         await TaskModel.findByIdAndUpdate(task._id, { isEmail: true });
       }
-      if (deadline === 0) {
+      if (deadline <= 0) {
         await TaskModel.findByIdAndUpdate(task._id, { status: "failure" });
       }
     }
