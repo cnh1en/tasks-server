@@ -10,7 +10,7 @@ dotenv.config();
 
 connect();
 // second-minute - hour - day - month- day of week
-cron.schedule("0 30 2 * * *", () => {
+cron.schedule("* * * * *", () => {
   Schedule();
   console.log("running a task every minute");
 });
