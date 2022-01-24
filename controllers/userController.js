@@ -1,8 +1,6 @@
 import Joi from "joi";
 import UserModel from "../models/user.js";
-import TaskModel from "../models/task.js";
 import dispatchPassword from "../services/dispatchPassword.js";
-import { createUser, findAllUsers, deleteUser } from "../services/user.js";
 import uuidApiKey from "uuid-apikey";
 import argon2 from "argon2";
 const createUserController = async (req, res, next) => {

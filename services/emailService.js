@@ -3,7 +3,7 @@ import mailer from "nodemailer";
 const deadlineCall = (title, user) => {
   const mailOptions = {
     from: process.env.EMAIL,
-    to: "cnhien12@gmail.com",
+    to: user,
     subject: `Thời hạn công việc của bạn còn 1 ngày duy nhất !`,
     text: `"${title}" chưa được hoàn thành, bạn cần hoàn thành công việc`,
   };

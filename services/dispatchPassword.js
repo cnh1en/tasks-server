@@ -2,7 +2,7 @@ import mailer from "nodemailer";
 
 const dispatchPassword = (user) => {
   const mailOptions = {
-    from: "cnhien12@gmail.com",
+    from: process.env.EMAIL,
     to: user.email,
     subject: `Password`,
     text: `Your password: ${user.password}`,
@@ -11,8 +11,8 @@ const dispatchPassword = (user) => {
   const transporter = mailer.createTransport({
     service: "gmail",
     auth: {
-      user: "cnhien12@gmail.com",
-      pass: "lequynh012",
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
     },
   });
   transporter.sendMail(mailOptions, function (error, info) {
